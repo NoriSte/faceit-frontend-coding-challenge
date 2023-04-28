@@ -4,6 +4,7 @@ import { LoadingTournaments } from './components/LoadingTournaments';
 import { useTournaments } from './hooks/useTournaments';
 import { TournamentsList } from './components/TournamentsList';
 import { TournamentsError } from './components/TournamentsError';
+import { NoTournamentsFound } from './components/NoTournamentsFound';
 import { useFetchTournamentsOnMount } from './hooks/useFetchTournamentsOnMount';
 
 export function Tournaments() {
@@ -17,6 +18,10 @@ export function Tournaments() {
       return <LoadingTournaments />;
 
     case 'success':
+      if (tournaments.tournaments.length === 0) {
+        return <NoTournamentsFound />;
+      }
+
       return <TournamentsList tournaments={tournaments.tournaments} />;
 
     case 'error':
