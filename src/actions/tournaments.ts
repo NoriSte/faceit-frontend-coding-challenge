@@ -1,14 +1,11 @@
 import { type AppThunk } from '.';
-import {
-  tournamentsSchema,
-  type Tournament,
-} from '../domain';
+import { tournamentsSchema, type Tournament } from '../domain';
 import { API_TOURNAMENTS_URL } from '../constants/api';
 import { type Query } from '../reducers/tournaments';
 export type TournamentsAction =
   | ReturnType<typeof setFetchTournamentsError>
   | ReturnType<typeof setFetchTournamentsSuccess>
-  | ReturnType<typeof setFetchTournamentsLoading>
+  | ReturnType<typeof setFetchTournamentsLoading>;
 
 // --------------------------------------------------
 // ACTIONS
