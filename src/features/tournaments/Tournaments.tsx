@@ -24,7 +24,10 @@ export function Tournaments() {
     case 'loading':
       return (
         <>
-          <TournamentsHeader searchTournaments={searchTournaments} />
+          <TournamentsHeader
+            currentSearchQuery={tournaments.query}
+            searchTournaments={searchTournaments}
+          />
           <LoadingTournaments />
         </>
       );
@@ -33,7 +36,10 @@ export function Tournaments() {
       if (tournaments.tournaments.length === 0) {
         return (
           <>
-            <TournamentsHeader searchTournaments={searchTournaments} />
+            <TournamentsHeader
+              currentSearchQuery={tournaments.query}
+              searchTournaments={searchTournaments}
+            />
             <NoTournamentsFound />
           </>
         );
@@ -41,7 +47,10 @@ export function Tournaments() {
 
       return (
         <>
-          <TournamentsHeader searchTournaments={searchTournaments} />
+          <TournamentsHeader
+            currentSearchQuery={tournaments.query}
+            searchTournaments={searchTournaments}
+          />
           <TournamentsList
             tournaments={tournaments.tournaments}
             deleteTournament={deleteTournament}
@@ -53,7 +62,10 @@ export function Tournaments() {
     case 'error':
       return (
         <>
-          <TournamentsHeader searchTournaments={searchTournaments} />
+          <TournamentsHeader
+            currentSearchQuery={tournaments.query}
+            searchTournaments={searchTournaments}
+          />
           <TournamentsError onRetry={retryFetchTournaments} />
         </>
       );

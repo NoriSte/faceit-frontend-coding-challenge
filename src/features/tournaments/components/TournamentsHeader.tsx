@@ -6,16 +6,20 @@ import { type Query } from '../../../reducers/tournaments';
 import { SearchTournament } from './SearchTournament';
 
 interface TournamentsHeaderProps {
+  currentSearchQuery: string;
   searchTournaments: (query: Query) => void;
 
   className?: string;
 }
 const TournamentsHeaderComponent: FC<TournamentsHeaderProps> = (props) => {
-  const { searchTournaments, className } = props;
+  const { searchTournaments, currentSearchQuery } = props;
 
   return (
-    <div className={className}>
-      <SearchTournament searchTournaments={searchTournaments} />
+    <div>
+      <SearchTournament
+        searchTournaments={searchTournaments}
+        currentSearchQuery={currentSearchQuery}
+      />
     </div>
   );
 };
