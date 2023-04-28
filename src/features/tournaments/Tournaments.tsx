@@ -4,11 +4,13 @@ import { LoadingTournaments } from './components/LoadingTournaments';
 import { useTournaments } from './hooks/useTournaments';
 import { TournamentsList } from './components/TournamentsList';
 import { TournamentsError } from './components/TournamentsError';
+
 import { NoTournamentsFound } from './components/NoTournamentsFound';
 import { useFetchTournamentsOnMount } from './hooks/useFetchTournamentsOnMount';
 
 export function Tournaments() {
-  const { tournaments, retryFetchTournaments } = useTournaments();
+  const { tournaments, editTournamentName, retryFetchTournaments } =
+    useTournaments();
 
   useFetchTournamentsOnMount();
 
@@ -22,11 +24,21 @@ export function Tournaments() {
         return <NoTournamentsFound />;
       }
 
-      return <TournamentsList tournaments={tournaments.tournaments} />;
+      return (
+        <TournamentsList
+          tournaments={tournaments.tournaments}
+          editTournamentName={editTournamentName}
+        />
+      );
 
     case 'error':
       return <TournamentsError onRetry={retryFetchTournaments} />;
   }
 
-  return null;
+  // If TypeScript complains here, chances are the above code does not manage all the possible cases
+  throwUnhandledStatus(tournaments);
+}
+
+function throwUnhandledStatus(status: never) {
+  throw new Error(`Unhandled status: ${status}`);
 }

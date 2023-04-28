@@ -49,6 +49,26 @@ export default function tournaments(
         query: action.query,
       } as const;
 
+    case 'OPTIMISTICALLY_UPDATE_TOURNAMENT': {
+      if (state.status !== 'success') return state;
+
+      const index = state.tournaments.findIndex(
+        (t) => t.id === action.tournament.id
+      );
+
+      if (index === -1) return state;
+
+      const nextTournaments = state.tournaments.map((tournament) => {
+        if (tournament.id === action.tournament.id) return action.tournament;
+        return tournament;
+      });
+
+      return {
+        ...state,
+        tournaments: nextTournaments,
+      };
+    }
+
     default:
       return state;
   }
