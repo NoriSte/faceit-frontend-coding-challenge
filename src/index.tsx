@@ -6,10 +6,13 @@ import store from './store';
 import Container from './components/Container';
 import H4 from './components/H4';
 
+import { Tournaments } from './features/tournaments';
+
 const App = () => {
   return (
     <Container>
       <H4>FACEIT Tournaments</H4>
+      <Tournaments />
     </Container>
   );
 };
