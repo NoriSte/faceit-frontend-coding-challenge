@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { LoadingTournaments } from './components/LoadingTournaments';
 
 import { useTournaments } from './hooks/useTournaments';
 import { TournamentsList } from './components/TournamentsList';
 import { TournamentsError } from './components/TournamentsError';
 import { TournamentsHeader } from './components/TournamentsHeader';
 import { NoTournamentsFound } from './components/NoTournamentsFound';
+import { LoadingTournaments } from './components/LoadingTournaments';
 import { useFetchTournamentsOnMount } from './hooks/useFetchTournamentsOnMount';
 
 export function Tournaments() {
   const {
     tournaments,
     deleteTournament,
+    createTournament,
     searchTournaments,
     editTournamentName,
     retryFetchTournaments,
@@ -26,6 +27,7 @@ export function Tournaments() {
         <>
           <TournamentsHeader
             currentSearchQuery={tournaments.query}
+            createTournament={createTournament}
             searchTournaments={searchTournaments}
           />
           <LoadingTournaments />
@@ -38,6 +40,7 @@ export function Tournaments() {
           <>
             <TournamentsHeader
               currentSearchQuery={tournaments.query}
+              createTournament={createTournament}
               searchTournaments={searchTournaments}
             />
             <NoTournamentsFound />
@@ -49,6 +52,7 @@ export function Tournaments() {
         <>
           <TournamentsHeader
             currentSearchQuery={tournaments.query}
+            createTournament={createTournament}
             searchTournaments={searchTournaments}
           />
           <TournamentsList
@@ -64,6 +68,7 @@ export function Tournaments() {
         <>
           <TournamentsHeader
             currentSearchQuery={tournaments.query}
+            createTournament={createTournament}
             searchTournaments={searchTournaments}
           />
           <TournamentsError onRetry={retryFetchTournaments} />

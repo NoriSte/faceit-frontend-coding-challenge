@@ -1,8 +1,15 @@
 import { type AppThunk } from '.';
-import { tournamentsSchema, type Tournament } from '../domain';
+import {
+  tournamentSchema,
+  tournamentsSchema,
+  type Tournament,
+} from '../domain';
+
 import { API_TOURNAMENTS_URL } from '../constants/api';
 import { type Query } from '../reducers/tournaments';
+
 export type TournamentsAction =
+  | ReturnType<typeof addTournament>
   | ReturnType<typeof rollbackTournaments>
   | ReturnType<typeof setFetchTournamentsError>
   | ReturnType<typeof setFetchTournamentsSuccess>
@@ -49,6 +56,13 @@ function optimisticallyDeleteTournament(tournamentId: string) {
   } as const;
 }
 
+function addTournament(tournament: Tournament) {
+  return {
+    type: 'ADD_TOURNAMENT',
+    tournament,
+  } as const;
+}
+
 function rollbackTournaments(tournaments: Tournament[]) {
   return {
     type: 'ROLLBACK_TOURNAMENTS',
@@ -70,6 +84,20 @@ export const fetchTournamentsThunk =
       dispatch(setFetchTournamentsSuccess(query, tournaments));
     } catch (error) {
       dispatch(setFetchTournamentsError(query));
+    }
+  };
+
+export const createTournamentThunk =
+  (payload: { name: string }): AppThunk =>
+  async (dispatch) => {
+    const { name } = payload;
+
+    try {
+      const tournament = await createServerTournament({ name });
+      dispatch(addTournament(tournament));
+    } catch (error) {
+      // Even if the server error is not used, the server error is caught to align the thunk to the
+      // other ones that do not return the error back to the caller.
     }
   };
 
@@ -99,6 +127,7 @@ export const editTournamentThunk =
       dispatch(optimisticallyUpdateTournament(prevTournament));
     }
   };
+
 export const deleteTournamentThunk =
   (payload: { tournamentId: string }): AppThunk =>
   async (dispatch, getState) => {
@@ -145,6 +174,21 @@ const fetchServerTournaments = (options: {
       return response.json();
     })
     .then(tournamentsSchema.parse);
+
+const createServerTournament = (options: {
+  name: string;
+}): Promise<Tournament> =>
+  fetch(`${API_TOURNAMENTS_URL}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: options.name }),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error('Server error');
+
+      return response.json();
+    })
+    .then(tournamentSchema.parse);
 
 const editServerTournament = (options: {
   tournamentId: string;

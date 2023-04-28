@@ -69,6 +69,17 @@ export default function tournaments(
       };
     }
 
+    case 'ADD_TOURNAMENT': {
+      if (state.status !== 'success') return state;
+
+      const nextTournaments = [action.tournament, ...state.tournaments];
+
+      return {
+        ...state,
+        tournaments: nextTournaments,
+      };
+    }
+
     case 'OPTIMISTICALLY_DELETE_TOURNAMENT':
       const { tournamentId } = action;
 
