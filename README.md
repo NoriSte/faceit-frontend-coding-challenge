@@ -1,3 +1,31 @@
+## Stefano Magni's ([@NoriSte](https://github.com/NoriSte)) notes
+
+Thank you for your time 😊 you can find the solution in the `noriste-frontend-coding-challenge-2023` branch.
+
+I report some notes about the implementation after the feedback I received from Vesim Demeni: the general feedback was
+
+1. To carefully follow the instructions
+2. To not over-complicate the problems and be ready to justify my decisions in the tech interview
+
+That means that a list of possible improvements is not in the solution, such as:
+
+- The eventual server errors are not stored Redux nor propagated back to the caller
+- The prompts/confirmations do not tell the user why the tournament name is not valid
+- There is no abort logic for outgoing requests
+- There are no tests
+- There is no optimistic flag in the tournament created/updated (that could simplify the optimistic updates)
+- There is no race condition management among the various create/edit/delete/search actions
+- The solution takes for granted that it's the only consumer of the server, and the tournaments cannot be changed by someone else
+
+Additional notes:
+
+1. I have not used ChatGPT
+2. I followed the Redux docs in order to correctly type the actions and thunks
+3. I have not put all the name validations in a single Regex since I think the current implementation is more readable
+4. I rebuilt the branch's history to ease readability, the same thing sometimes I do for regular PRs
+
+---
+
 # Frontend Coding Challenge v2.0
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and has addtional libraries included:
