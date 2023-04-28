@@ -7,17 +7,19 @@ import { type Tournament } from '../../../domain';
 
 interface TournamentItemProps {
   tournament: Tournament;
+  deleteTournament: (tournamentId: string) => void;
   editTournamentName: (tournament: Tournament) => void;
 }
 
 const TournamentItemComponent: FC<TournamentItemProps> = (props) => {
-  const { tournament, editTournamentName } = props;
+  const { tournament, editTournamentName, deleteTournament } = props;
 
   return (
     <li>
       <span>{tournament.name}</span>
       <span>{tournament.id}</span>
       <Button onClick={() => editTournamentName(tournament)}>Edit</Button>
+      <Button onClick={() => deleteTournament(tournament.id)}>Delete</Button>
     </li>
   );
 };

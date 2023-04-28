@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { getTournaments } from '../../../selectors';
+import { useDeleteTournament } from './useDeleteTournament';
 import { useEditTournamentName } from './useEditTournamentName';
 import { useRetryFetchTournaments } from './useRetryFetchTournaments';
 /**
@@ -7,11 +8,13 @@ import { useRetryFetchTournaments } from './useRetryFetchTournaments';
  */
 export function useTournaments() {
   const tournaments = useSelector(getTournaments);
+  const deleteTournament = useDeleteTournament();
   const editTournamentName = useEditTournamentName();
   const retryFetchTournaments = useRetryFetchTournaments();
 
   return {
     tournaments,
+    deleteTournament,
     editTournamentName,
     retryFetchTournaments,
   };

@@ -8,13 +8,14 @@ import { TournamentItem } from './TournamentItem';
 
 interface TournamentsListProps {
   tournaments: Tournament[];
+  deleteTournament: (tournamentId: string) => void;
   editTournamentName: (tournament: Tournament) => void;
 
   className?: string;
 }
 
 const TournamentsListComponent: FC<TournamentsListProps> = (props) => {
-  const { tournaments, editTournamentName } = props;
+  const { tournaments, deleteTournament, editTournamentName } = props;
 
   return (
     <ul>
@@ -22,6 +23,7 @@ const TournamentsListComponent: FC<TournamentsListProps> = (props) => {
         <TournamentItem
           key={tournament.id}
           tournament={tournament}
+          deleteTournament={deleteTournament}
           editTournamentName={editTournamentName}
         />
       ))}

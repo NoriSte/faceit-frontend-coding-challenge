@@ -69,6 +69,38 @@ export default function tournaments(
       };
     }
 
+    case 'OPTIMISTICALLY_DELETE_TOURNAMENT':
+      const { tournamentId } = action;
+
+      if (state.status !== 'success') return state;
+
+      const index = state.tournaments.findIndex((t) => t.id === tournamentId);
+
+      if (index === -1) return state;
+
+      const nextTournaments = state.tournaments.reduce<Tournament[]>(
+        (acc, tournament) => {
+          if (tournament.id === tournamentId) return acc;
+
+          acc.push(tournament);
+          return acc;
+        },
+        []
+      );
+
+      return {
+        ...state,
+        tournaments: nextTournaments,
+      };
+
+    case 'ROLLBACK_TOURNAMENTS':
+      if (state.status !== 'success') return state;
+
+      return {
+        ...state,
+        tournaments: action.tournaments,
+      };
+
     default:
       return state;
   }

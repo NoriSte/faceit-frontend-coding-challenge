@@ -9,8 +9,12 @@ import { NoTournamentsFound } from './components/NoTournamentsFound';
 import { useFetchTournamentsOnMount } from './hooks/useFetchTournamentsOnMount';
 
 export function Tournaments() {
-  const { tournaments, editTournamentName, retryFetchTournaments } =
-    useTournaments();
+  const {
+    tournaments,
+    deleteTournament,
+    editTournamentName,
+    retryFetchTournaments,
+  } = useTournaments();
 
   useFetchTournamentsOnMount();
 
@@ -25,10 +29,11 @@ export function Tournaments() {
       }
 
       return (
-        <TournamentsList
-          tournaments={tournaments.tournaments}
-          editTournamentName={editTournamentName}
-        />
+          <TournamentsList
+            tournaments={tournaments.tournaments}
+            deleteTournament={deleteTournament}
+            editTournamentName={editTournamentName}
+          />
       );
 
     case 'error':
